@@ -20,3 +20,11 @@
 -   mutation은 정보를 조작하여 변형시킬 때 쓰인다. (POST, PUT, DELETE)
 -   resolver는 query를 resolve(해결)하는 것이다.
 -   graphql이란 query를 설명하고 resolvers를 프로그래밍하는 것이다.
+
+### Subscription
+
+-   subscription은 주로 실시간(real-time) 양방향 통신 애플리케이션을 구현하기 위해서 사용
+-   subscription도 기본적으로 query처럼 데이터를 조회를 위해서 사용되지만 작동 방식에서 큰 차이가 있음.
+-   query와 mutation이 HTTP 프로토콜을 사용하는 반면에, subscription은 Web Socket 프로토콜을 사용
+-   클라이언트는 서버와 연결 채널을 유지한 상태로, 서버에서 발생하는 이벤트를 실시간으로 수신받을 수 있다.
+-   서버가 여러 인스턴스인 경우(e.g. NodeJS PM2 clustering) 단일 객체로 운영해야 한다. (redis)
