@@ -1,3 +1,5 @@
+import { PubSub } from 'graphql-yoga'
+
 type Person = {
 	id?: number
 	name: string
@@ -26,7 +28,7 @@ export const getPeople = (): Person[] => people
 
 export const getPersonById = (id: number): Person => people.filter((person: Person) => person.id === id)[0]
 
-export const addPerson = (person: Person) => {
+export const addPerson = (person: Person, pubsub: PubSub) => {
 	const { name, age, gender } = person
 	const newbie: Person = {
 		id: personIdx++,
@@ -35,15 +37,23 @@ export const addPerson = (person: Person) => {
 		gender,
 	}
 	people.push(newbie)
+	pubsub.publish('addPersonEvent', {
+		addPersonEvent: newbie,
+	})
 	return newbie
 }
 
-export const deletePersonById = (id: number): boolean => {
+export const deletePersonById = (id: number, pubsub: PubSub): boolean => {
+	let result = false
 	for (const [i, person] of Object.entries(people)) {
 		if (person.id === id) {
 			people.splice(+i, 1)
-			return true
+			result = true
+			break
 		}
 	}
-	return false
+	pubsub.publish('deletePersonEvent', {
+		deletePersonEvent: result,
+	})
+	return result
 }

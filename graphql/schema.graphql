@@ -24,3 +24,9 @@ type Mutation {
 	addPerson(age: Int!, name: String!, gender: Boolean!): Person!
 	deletePerson(id: Int!): Boolean!
 }
+
+type Subscription {
+	publishMessageEvent: String
+	addPersonEvent: Person!
+	deletePersonEvent: Boolean!
+}
